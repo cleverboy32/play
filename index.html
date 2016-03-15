@@ -1,0 +1,127 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>我的画布</title>
+  <style type="text/css">
+*{ margin: 0;
+padding: 0}
+
+ </style>
+ </head>
+<body >
+	<canvas id="canvas"style="border:1px solid #aaa;">
+ </canvas>
+ <script type="text/javascript">
+
+  var stars=[];
+ var widthmax = 1350;
+    var heightmax = 700;
+        var a;
+        var index = 1;
+        var colors = ['black','yellow'];
+   window.onload = function(){
+   	   var tangle = [
+  {p:[{x:100,y:100},{x:300,y:100},{x:200,y:150},{x:150,y:125}],color:'#ddd'},
+  {p:[{x:100,y:100},{x:200,y:150},{x:180,y:180},{x:100,y:250}],color:'#aaa'},
+  {p:[{x:100,y:250},{x:100,y:300},{x:180,y:300},{x:180,y:180}],color:'#699'},
+  {p:[{x:180,y:180},{x:200,y:150},{x:250,y:250},{x:150,y:280}],color:'#123'},
+  {p:[{x:150,y:280},{x:180,y:300},{x:300,y:300},{x:300,y:240}],color:'#777'},
+  {p:[{x:300,y:240},{x:250,y:250},{x:200,y:150},{x:300,y:100}],color:'#000'}
+   ]
+   
+   	var canvas = document.getElementById("canvas");
+   	canvas.width = widthmax;
+   	canvas.height = heightmax;
+   	var context = canvas.getContext('2d');
+  	for(var i= 0;i<tangle.length;i++){
+            context.beginPath();
+    	     context.moveTo(tangle[i].p[0].x,tangle[i].p[0].y);
+    	     context.lineTo(tangle[i].p[1].x,tangle[i].p[1].y);
+    	    context.lineTo(tangle[i].p[2].x,tangle[i].p[2].y);
+    	     context.lineTo(tangle[i].p[3].x,tangle[i].p[3].y);
+            context.closePath();
+            context.fillStyle=tangle[i].color;
+            context.fill();
+        }
+     
+    
+    	//绘制一条直线
+   	 context.beginPath();
+   	   context.moveTo(300,300);
+   	   context.lineTo(400,300);
+   	   context.lineTo(500,500);
+   	   context.closePath();
+   	   /*stroke 绘制线条边 */
+   	  context.strokeStyle = "#005588";
+   	   context.stroke(); 
+   	   //fill 填充
+   	   context.fillStyle="red";
+   	   context.fill();
+       //绘制 一条弧线
+       for(var i=0;i<3;i++){
+          context.beginPath();
+           context.arc(600,200+i*100,50,0,(i*0.5+0.5)*Math.PI);
+       context.strokeStyle ="black";
+       context.stroke();
+       context.fillStyle ="red";
+       context.fill();
+      }
+       var sky = context.createLinearGradient(0,0,0,700);
+       sky.addColorStop(0.0, 'black');
+       sky.addColorStop(1.0,'#035');
+      context.fillStyle=sky;
+
+      context.fillRect(0,0,widthmax,heightmax);
+      addstar();
+      setInterval(
+        function(){
+    for(var i=0;i<stars.length;i++){
+      drawstar(context,stars[i].x,stars[i].y,stars[i].r,stars[i].R,stars[i].dg,stars[i].color);
+     }
+      if((index%5) ==0){
+          update("yellow");
+          index++;
+        }
+        else{
+         update("black");
+         index++;
+        }
+  
+   },100);
+ }
+  function addstar(){
+   for(var i=0;i<100;i++){
+    var s = {
+         x : Math.random()*widthmax,
+         y: Math.random()*300,
+         r :Math.random()*5+2,
+         R :Math.random()*10+10,
+         dg: Math.random()*360,
+         color :"yellow"
+      };
+      stars.push(s);
+    }
+  }
+  function update(col){
+   for(var i=0;i<stars.length;i++){
+      stars[i].color= col;
+    }
+ 
+  }
+  function drawstar(cxt,x,y,r,R,dg,color){
+    var deg =Math.PI/180;
+    cxt.beginPath();
+    for(var i =0;i<5;i++){
+       cxt.lineTo(Math.cos((18+72*i-dg)*deg)*R+x,Math.sin((18+72*i-dg)*deg)*R+y);
+       cxt.lineTo(Math.cos((54+72*i-dg)*deg)*r+x,Math.sin((54+72*i-dg)*deg)*r+y);
+        cxt.lineTo(Math.cos((18+72*(i+1)-dg)*deg)*R+x,Math.sin((18+72*(i+1)-dg)*deg)*R+y);
+       }
+        cxt.lineWidth = 4;
+       cxt.fillStyle = color;
+        
+        cxt.fill();
+  }
+ </script>
+</body>
+</html>
