@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>bootstrip 页面</title>
+<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+
+<link rel="stylesheet" type="text/css" href="pagedemo.css">
+</head>
+
+<body>
+<div class="row rowcss">
+<div class="col-lg-2 divnav"></div>
+<div class="navbar col-lg-8 ">
+<ul class="nav navbar-nav nav-pills ">
+	<li><a href="#">网站首页</a></li>
+    <li><a href="#">个人博客模板</a></li>
+    <li><a href="#">图书推荐</a></li>
+    <li ><a href="#" class="active" >网站建设</a></li>
+    <li><a href="#">html5/css3</a></li>
+    <li><a href="#">技术讨论</a></li>
+    <li><a href="#">慢生活</a></li>
+    <li><a href="#">闲言碎语</a></li>
+    <li><a href="#">js实例</a></li>
+</ul>
+</div>
+</div>
+<div class="img">
+<div class="imgp">
+<p>渡人如渡己，渡已，亦是渡</p>
+<p>当我们被误解时，会花很多时间去辩白。 但没有用，没人愿意听，大家习惯按自己的所闻、理解做出判别，每个人其实都很固执。与其努力且痛苦的试图扭转别人的评判，不如默默承受，给大家多一点时间和空间去了解。而我们省下辩解的功夫，去实现自身更久远的人生价值。其实，渡人如渡己，渡已，亦是渡人。</p>
+</div>
+</div>
+<div class="card">
+<p class="lead">我的名片</p>
+<p class="cardp">网名：leftear|左耳</p>
+<p class="cardp">职业：网页前端设计师</p>
+<p class="cardp">电话：12345678990</p>
+<p class="cardp">邮件：163@com</p>
+  <div class=" divyuan"> <span class="span1" href="#" title="haha"></span></div>	
+ <div class=" divyuan"> <span class="span2" href="#" title="haha"></span> </div>
+ <div class=" divyuan"> <span class="span3" href="#" title="haha"></span> </div>
+ <div class=" divyuan"> <span class="span4" href="#" title="haha"></span> </div>
+ <div class=" divyuan"> <span class="span5" href="#" title="haha"></span> </div>	
+</div>
+<div id ="content">
+ <div id="left">
+     <div class="media mediadiv">
+        <div class="media-body">
+        <h3 class="media-heading">how to be high skiller</h3>
+           <div class="media">
+          <img src="images/media1.jpg" width="150px" height="150px" class="media-object pull-left" >
+               <div class="media-body">
+                <p>media 媒体对象的总容器
+                 media-object 媒体对象的对象 常指图片
+                 media-body 媒体对象（图片） 右边的文字等
+                 media-heading 媒体对象（图片） 右边文字的标题
+                 媒体对象的嵌套，只需要把另一个媒体对象嵌套在大媒体对象的media-body 里面</p>
+               </div>
+            </div>
+            <div class="media-bottom">2016.5.3 14:39</div>
+        </div>
+      </div>
+
+</div>
+ <div id="right">
+     <div id="distab">
+     <h4>我的推荐文章</h4>
+         <ol>
+        <li >大苦大难的文章</li>  
+        <li >大苦大难的文章</li>
+        <li >大苦大难的文章</li>
+        <li >大苦大难的文章</li>
+        <li >大苦大难的文章</li>
+        </ol>
+     </div>
+</div> 
+
+</div>
+<div id="footer">
+联系邮箱：1430544537@qq.com
+</div>
+<script src="2jquery.min.js"></script>
+<script src="bootstrap.js"></script>
+<script type="text/javascript">
+
+     var i =2;
+   $(function() {
+    //图像加载时
+  var timer= setInterval(
+
+   function(){
+  $(".img").addClass("img"+i);
+   i++;
+   if(i==5){
+    clearInterval(timer);
+   }
+ },1000);    //每隔2s执行一次
+
+       // 图片文字的显示与隐藏
+       $(".img").mouseover(
+        function(){
+          $(".imgp").show();
+       });
+       $(".img").mouseout(
+        function(){
+        $(".imgp").hide();
+       });
+ })
+</script>
+</body>
+</html>
