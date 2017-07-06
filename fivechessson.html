@@ -1,0 +1,418 @@
+<!DOCTYPE HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<TITLE>人机大战五子棋</TITLE>
+
+</HEAD>
+<body>
+<canvas id="canvas" style="border:1px solid #aaa;"></canvas>
+</body>
+<script>
+	var width = 600;
+	var height= 600;
+	var k=0;
+  //创建所有表格数组
+  var locations = [];
+ function getMousePos(event){
+		var e = even || window.event;
+		return {'x':e.screenX,'y':e.screenY}
+	}
+  //放棋函数
+  function fangqi(rx,ry,context){
+    for(var i=0;i<locations.length;i++){
+     if(locations[i].x==(rx-20)&&locations[i].y==(ry-20)){
+       if(locations[i].index==0){
+          context.arc(rx,ry,15,0,360,false);
+           context.fill();
+           context.closePath();
+           if(k==0){
+            locations[i].index = 1;
+          }
+          if(k==1){
+            locations[i].index = 2;
+          }
+        }
+       else{
+          alert("这里被放棋了");
+       }
+     }
+
+   }
+  }
+  //黑棋的输赢判断  
+  //向上向下判断是否有棋
+  function upfa(postionx,postiony,upfalg){
+    upfalg++;
+    postiony = postiony-40;
+    for(var i=0;i<locations.length;i++){
+      if(locations[i].x==postionx&&locations[i].y==postiony)
+      {
+        if (locations[i].index==1){
+           return upfa(postionx,postiony,upfalg);
+         }
+        else{
+          return upfalg;
+        }
+      }
+    }
+ }
+  function defa(postionx,postiony,defalg){
+    defalg++;
+    postiony=postiony+40;
+    for(var i=0;i<locations.length;i++){
+      if(locations[i].x==postionx&&locations[i].y==postiony){
+        if (locations[i].index==1) 
+        {
+           return defa(postionx,postiony,defalg);
+        }
+       else{
+          return defalg;
+        }
+      }
+    }
+ }
+ //向左向右判断是否有棋
+ function lefa(postionx,postiony,lefalg){
+    lefalg++;
+    postionx=postionx-40;
+    for(var i=0;i<locations.length;i++){
+      if(locations[i].x==postionx&&locations[i].y==postiony){
+        if (locations[i].index==1) 
+        {
+           return lefa(postionx,postiony,lefalg);
+        }
+       else{
+          return lefalg;
+        }
+      }
+    }
+
+ }
+ function rifa(postionx,postiony,rifalg){
+   rifalg++;
+   postionx=postionx+40;
+    for(var i=0;i<locations.length;i++){
+      if(locations[i].x==postionx&&locations[i].y==postiony){
+        if (locations[i].index==1) 
+        {
+           return rifa(postionx,postiony,rifalg);
+        }
+       else{
+          return rifalg;
+        }
+      }
+    }
+
+ }
+ //左上角右下角判断是否有棋
+ function  leupfa(postionx,postiony,leupfalg){
+   leupfalg++;
+   postionx=postionx-40;
+   postiony=postiony-40;
+    for(var i=0;i<locations.length;i++){
+      if(locations[i].x==postionx&&locations[i].y==postiony){
+        if (locations[i].index==1) 
+        {
+           return leupfa(postionx,postiony,leupfalg);
+        }
+       else{
+          return leupfalg;
+        }
+      }
+    }
+
+ }
+ function  ridefa(postionx,postiony,ridefalg){
+   ridefalg++;
+   postionx=postionx+40;
+   postiony=postiony+40;
+    for(var i=0;i<locations.length;i++){
+      if(locations[i].x==postionx&&locations[i].y==postiony){
+        if (locations[i].index==1) 
+        {
+           return ridefa(postionx,postiony,ridefalg);
+        }
+       else{
+          return ridefalg;
+        }
+      }
+    }
+
+ }
+ //右上角 左下角判断是否有棋
+ function  ledefa(postionx,postiony,ledefalg){
+   ledefalg++;
+   postionx=postionx-40;
+   postiony=postiony+40;
+    for(var i=0;i<locations.length;i++){
+      if(locations[i].x==postionx&&locations[i].y==postiony){
+        if (locations[i].index==1) 
+        {
+           return ledefa(postionx,postiony,ledefalg);
+        }
+       else{
+          return ledefalg;
+        }
+      }
+    }
+
+ }
+ function  riupfa(postionx,postiony,riupfalg){
+   riupfalg++;
+   postionx=postionx+40;
+   postiony=postiony-40;
+    for(var i=0;i<locations.length;i++){
+      if(locations[i].x==postionx&&locations[i].y==postiony){
+        if (locations[i].index==1) 
+        {
+           return riupfa(postionx,postiony,riupfalg);
+        }
+       else{
+          return riupfalg;
+        }
+      }
+    }
+
+ }
+
+
+//白棋的输赢判断 
+//向上向下判断是否有棋
+  function wupfa(postionx,postiony,upfalg){
+    upfalg++;
+    postiony = postiony-40;
+    for(var i=0;i<locations.length;i++){
+      if(locations[i].x==postionx&&locations[i].y==postiony)
+      {
+        if (locations[i].index==2){
+           return wupfa(postionx,postiony,upfalg);
+         }
+        else{
+          return upfalg;
+        }
+      }
+    }
+ }
+  function wdefa(postionx,postiony,defalg){
+    defalg++;
+    postiony=postiony+40;
+    for(var i=0;i<locations.length;i++){
+      if(locations[i].x==postionx&&locations[i].y==postiony){
+        if (locations[i].index==2) 
+        {
+           return wdefa(postionx,postiony,defalg);
+        }
+       else{
+          return defalg;
+        }
+      }
+    }
+ }
+ //向左向右判断是否有棋
+ function wlefa(postionx,postiony,lefalg){
+    lefalg++;
+    postionx=postionx-40;
+    for(var i=0;i<locations.length;i++){
+      if(locations[i].x==postionx&&locations[i].y==postiony){
+        if (locations[i].index==2) 
+        {
+           return wlefa(postionx,postiony,lefalg);
+        }
+       else{
+          return lefalg;
+        }
+      }
+    }
+
+ }
+ function wrifa(postionx,postiony,rifalg){
+   rifalg++;
+   postionx=postionx+40;
+    for(var i=0;i<locations.length;i++){
+      if(locations[i].x==postionx&&locations[i].y==postiony){
+        if (locations[i].index==2) 
+        {
+           return wrifa(postionx,postiony,rifalg);
+        }
+       else{
+          return rifalg;
+        }
+      }
+    }
+
+ }
+ //左上角右下角判断是否有棋
+ function  wleupfa(postionx,postiony,leupfalg){
+   leupfalg++;
+   postionx=postionx-40;
+   postiony=postiony-40;
+    for(var i=0;i<locations.length;i++){
+      if(locations[i].x==postionx&&locations[i].y==postiony){
+        if (locations[i].index==2) 
+        {
+           return wleupfa(postionx,postiony,leupfalg);
+        }
+       else{
+          return leupfalg;
+        }
+      }
+    }
+
+ }
+ function  wridefa(postionx,postiony,ridefalg){
+   ridefalg++;
+   postionx=postionx+40;
+   postiony=postiony+40;
+    for(var i=0;i<locations.length;i++){
+      if(locations[i].x==postionx&&locations[i].y==postiony){
+        if (locations[i].index==2) 
+        {
+           return wridefa(postionx,postiony,ridefalg);
+        }
+       else{
+          return ridefalg;
+        }
+      }
+    }
+
+ }
+ //右上角 左下角判断是否有棋
+ function  wledefa(postionx,postiony,ledefalg){
+   ledefalg++;
+   postionx=postionx-40;
+   postiony=postiony+40;
+    for(var i=0;i<locations.length;i++){
+      if(locations[i].x==postionx&&locations[i].y==postiony){
+        if (locations[i].index==2) 
+        {
+           return wledefa(postionx,postiony,ledefalg);
+        }
+       else{
+          return ledefalg;
+        }
+      }
+    }
+
+ }
+ function  wriupfa(postionx,postiony,riupfalg){
+   riupfalg++;
+   postionx=postionx+40;
+   postiony=postiony-40;
+    for(var i=0;i<locations.length;i++){
+      if(locations[i].x==postionx&&locations[i].y==postiony){
+        if (locations[i].index==2) 
+        {
+           return wriupfa(postionx,postiony,riupfalg);
+        }
+       else{
+          return riupfalg;
+        }
+      }
+    }
+
+ }
+
+	window.onload=function(){
+	var canvas = document.getElementById("canvas");
+   	canvas.width = width;
+   	canvas.height = height;
+   	var context = canvas.getContext('2d');
+   	context.fillStyle="#ccc";
+   	context.fillRect(0,0,600,600);
+    context.fillStyle="#fff";
+   	context.strokeStyle="#ccc";
+    context.fillRect(20,20,560,560);
+    context.strokeRect(20,20,560,560);
+  
+    for(var i=0;i<14;i++){
+    	for(j=0;j<14;j++){
+         context.strokeRect(20+j*40,20+i*40,40,40);
+         var location = {
+            x:20+j*40,
+            y:20+i*40,
+            index:0//没被放棋
+         };
+         locations.push(location);
+      }
+    }
+  
+   document.onmousedown=function(event){
+     event = event || window.event;
+   	var posX = event.clientX;
+   	var posY = event.clientY;
+   	var rx = Math.floor((posX-20)/40)*40+40;
+   	var ry = Math.floor((posY-20)/40)*40+40;
+   	context.beginPath();
+   	if(k==0){
+   	context.fillStyle="#000";
+    fangqi(rx,ry,context);
+    k=1;
+     //向上向下验证
+   var upflags = upfa(rx-20,ry-20,0);
+   var deflags= defa(rx-20,ry-20,0); 
+   if ((upflags+deflags)>5) 
+   {
+    alert("黑棋赢了！");
+  }
+  //向左向右验证
+  var leflags = lefa(rx-20,ry-20,0);
+  var riflags= rifa(rx-20,ry-20,0); 
+  if ((leflags+riflags)>5) 
+  {
+    alert("黑棋赢了！");
+  }
+  //左上角右下角验证
+  var leupflags = leupfa(rx-20,ry-20,0);
+  var rideflags= ridefa(rx-20,ry-20,0); 
+  if ((leupflags+rideflags)>5) 
+  {
+    alert("黑棋赢了！");
+  }
+  //左下角右上角验证
+  var ledeflags = ledefa(rx-20,ry-20,0);
+  var riupflags= riupfa(rx-20,ry-20,0); 
+  if ((ledeflags+riupflags)>5) 
+  {
+    alert("黑棋赢了！");
+  }
+}
+   else{
+   	context.fillStyle="#ccc";
+    fangqi(rx,ry,context);
+   	k=0;
+       //向上向下验证
+    var upflags = wupfa(rx-20,ry-20,0);
+    var deflags= wdefa(rx-20,ry-20,0); 
+   if ((upflags+deflags)>5) 
+   {
+    alert("白棋赢了！");
+  }
+  //向左向右验证
+  var leflags = wlefa(rx-20,ry-20,0);
+  var riflags= wrifa(rx-20,ry-20,0); 
+  if ((leflags+riflags)>5) 
+  {
+    alert("白棋赢了！");
+  }
+  //左上角右下角验证
+  var leupflags = wleupfa(rx-20,ry-20,0);
+  var rideflags= wridefa(rx-20,ry-20,0); 
+  if ((leupflags+rideflags)>5) 
+  {
+    alert("白棋赢了！");
+  }
+  //左下角右上角验证
+  var ledeflags = wledefa(rx-20,ry-20,0);
+  var riupflags= wriupfa(rx-20,ry-20,0); 
+  if ((ledeflags+riupflags)>5) 
+  {
+    alert("白棋赢了！");
+  }
+
+   }
+  }
+}
+
+
+</script>
+</html>

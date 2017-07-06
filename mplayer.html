@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<HTML>
+	<head>
+		<title>cleverboy32 音乐风格</title>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8" >
+		<script type="text/javascript" src="2jquery.min.js"></script>
+
+
+		<script type="text/javascript" src="mplayer.js"></script>
+    <style type="text/css">
+     *{ margin: 0;padding: 0; }
+ html,body{ width: 100%;height: 100%;}
+.body{
+	/*background: -webkit-linear-gradient(top,rgba(255,0,0,0),rgba(255,0,0,1)); /* Safari 5.1 - 6 */
+    /*background: -o-linear-gradient(right,rgba(255,0,0,0),rgba(255,0,0,1)); /* Opera 11.1 - 12*/
+    /*background: -moz-linear-gradient(right,rgba(247,238,180,1),rgba(247,238,180,0.7)); /* Firefox 3.6 - 15*/
+    background: linear-gradient(to bottom, rgba(247,238,180,1),rgba(133,190,227,0.6)); /* 标准的语法 */
+ width: 100%;height: 100%;margin-left: 0px;}
+.picture{ width:181px;height: 181px;top:100px;position: absolute;left:100px;border-radius:90px;
+	border:4px solid #fff;overflow: hidden; }
+ .player{ width:170px; height:58px; position: absolute;top:300px; left: 110px;background-color:#D6CFE1;}
+ .pre,.bef,.stop,.on{ width: 36px; height: 36px; overflow: hidden;}
+ .pre{ background-image: url(images/p4.jpg);}
+ .bef{ background-image: url(images/p3.jpg);}
+ .stop{ background-image: url(images/p2.jpg);}
+ .on{ background-image: url(images/p1.jpg);}
+ li{list-style-type: none; float: left;margin: 10px;}
+ .songword{ width:600px; border-radius:20px; height:500px;
+ 	position: absolute;top:100px;left:400px;color: rgba(100,210,30,0.9); overflow: hidden;font-family:"字体管家嘉丽丽"; font-size: 20px; text-align: center;
+       background: linear-gradient(to bottom, rgba(224,212,143,0.3),rgba(133,190,227,0.1)); /* 标准的语法 */}
+ .songhead{ font-size: 24px;margin-bottom:10px;}
+ #w{height:420px;position:absolute;overflow: hidden;width:500px;left:0px;}
+ #w ul{width: 500px; position: absolute;top:0px; left: 50px;}
+ #w ul li{height:30px; line-height:30px;width: 500px;margin:0px 30px}
+    </style>
+
+	</head>
+	<body>
+   <div class="body">
+   	<div class="picture">
+   		<img src="images/pushu.jpg">
+   	</div>
+   	<div class="player">
+    <ul>
+   	<li><div class="pre"></div></li>
+    <li><div class="stop" id='play'></div> </li>
+   	<li><div class="bef"></div></li>
+   </ul>
+	</div>
+  <div class="songword">
+    <div class="songhead"> 歌曲：白桦林 &nbsp; 所属专辑：我去2000年 <br>
+    歌曲原唱：朴树，叶蓓&nbsp;  填词：朴树 &nbsp; 谱曲：朴树<br>
+    </div>  
+    <div id="w">
+    <ul id="one">
+    <li>静静的村庄飘着白的雪</li>
+    <li>阴霾的天空下鸽子飞翔</li>
+    <li>白桦树刻着那两个名字</li>
+    <li>他们发誓相爱用尽这一生</li>
+    <li>有一天战火烧到了家乡</li>
+    <li>小伙子拿起枪奔赴边疆</li>
+    <li>心上人你不要为我担心</li>
+    <li>等着我回来在那片白桦林</li>
+    <li>天空依然阴霾依然有鸽子在飞翔</li>
+    <li>谁来证明那些没有墓碑的爱情和生命</li>
+    <li>雪依然在下那村庄依然安详</li>
+    <li>年轻的人们消逝在白桦林</li>
+    <li>噩耗声传来在那个午后</li>
+    <li>心上人战死在远方沙场</li>
+    <li>她默默来到那片白桦林</li>
+    <li>望眼欲穿地每天守在那里</li>
+    <li>她说他只是迷失在远方</li>
+    <li>他一定会来来这片白桦林</li>
+    <li>天空依然阴霾依然有鸽子在飞翔</li>
+    <li>谁来证明那些没有墓碑的爱情和生命</li>
+    <li>雪依然在下那村庄依然安详</li>
+    <li>年轻的人们消逝在白桦林</li>
+    <li>长长的路呀就要到尽头</li>
+    <li>那姑娘已经是白发苍苍</li>
+    <li>她时常听他在枕边呼唤</li>
+    <li>来吧亲爱的来这片白桦林</li>
+    <li>在死的时候她喃喃地说</li>
+    <li>我来了等着我在那片白桦林</li>
+ </ul>
+    </div>
+</div>
+   	
+   </div>
+	</body>
+
+ </HTML>

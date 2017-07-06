@@ -1,0 +1,15 @@
+
+ html,body{ width: 100%;height: 100%;}
+.body{background: url(images/background.jpg);width: 70%;height: 100%;margin-left: 0px;}
+.picture{ width:181px;height: 181px;top:10px;position: absolute;left: 50px;}
+ .player{ width: 400px; height:58px; position: absolute;top:200px; left: 50px;background-color: black;}
+ .pre,.bef,.stop,.on{ width: 36px; height: 36px; overflow: hidden;}
+ .pre{ background-image: url(images/p4.jpg);}
+ .bef{ background-image: url(images/p3.jpg);}
+ .stop{ background-image: url(images/p2.jpg);}
+ .on{ background-image: url(images/p1.jpg);}
+ li{list-style-type: none; float: left;margin: 10px;}
+ .songword{ width: 800px;border: 1px solid #668;height: 370px;position: absolute;top:270px;
+  left: 50px;color: rgba(100,210,30,0.9); overflow: hidden;font-family:"字体管家嘉丽丽"; font-size: 20px; text-align: center;}
+ .songhead{ font-size: 24px;margin-bottom: 10px;}
+ #ww{ border: 1px solid #666;height: 280px;width:600px;margin: auto; }

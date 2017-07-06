@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<meta charset="utf-8">
+     <TITLE>CLEVERBOY WORKS</TITLE>
+	
+   <script type="text/javascript" src="2jquery.min.js"></script>
+</head>
+	<style type="text/css">
+	body{margin:0px; padding: 0px;}
+   .showContent{ width: 100%;
+   	background: linear-gradient(to bottom, rgba(247,238,180,1),rgba(133,190,227,0.6));}  
+    .big{ width: 800px; height:600px;border: 2px solid #fff;float: right;margin-bottom:10px;
+     margin-right:10px; margin-top: 20px;border-radius:10px;overflow:hidden;}
+    .small{float: left;width: 400px;margin-left: 80px;position: absolute;height:540px;
+    	margin-top: 30px;overflow: hidden;}
+      .tango{
+       width:0; height:0;
+       line-height:0;
+       border:20px inset transparent; 
+       border-bottom-color:red;
+       border-top:0;
+       margin-left: 250px;
+       position: absolute;
+       top:5px;
+       }
+    .one,.two,.thr,.fro,.five{ width:300px; height:150px;overflow: hidden;
+     border: 1px solid #fff;border-radius:5px; position: absolute;left:50px;}
+    .one{top:15px;}
+    .two{top:195px;}
+    .thr{top:375px;}
+    .fro{top:555px;}
+    .five{top:735px;}
+          .tange{
+       width:0; height:0;
+       line-height:0;
+       border:20px outset transparent; 
+       border-top-color:red;
+       border-bottom:0;
+       margin-left:250px;
+       position: absolute;
+       top:580px;
+       }
+   .decrp{color:#f00;width: 800px;text-align: center;font-size:28px}
+  .clearfloat:after{
+                content:"";
+                display:block;
+                clear:both;
+                visibility:hidden;
+                height:0;
+                zoom:1
+            }
+     .clearfloat{zoom:1} 
+	</style>
+<body>
+<div class="showContent clearfloat">
+<!-- 左边的小demo -->
+<div class="tango"></div>
+<div class="small">
+
+<div class="one">
+<a href="pagedemo.html">
+<img src="images/pagedemo.jpg"  height="150" width="300" alt="网页模板">
+</a>
+</div>
+<div class=" two">
+<a href="mplayer.html">
+<img src="images/mpdemo.jpg"   height="150" width="300" alt="音乐播放器">
+</a>
+</div>
+<div class=" thr">
+<a href="fivechessson.html">
+<img src="images/chessdemo.jpg" height="150" width="300" alt="五子棋" >
+</a>
+</div>
+<div class=" fro">
+<a href="clock.html">
+<img src="images/clockdemo.png" height="150" width="300" alt="画布倒计时">
+</a>
+</div>
+<div class="five">
+<a href="sparkingstar.html">
+<img src="images/stardemo.png" height="150" width="300" alt="画布闪烁的星星">
+</a>
+</div>
+
+</div>
+  <div class="tange"></div>
+<div class="big">
+<div class="decrp">网页模板</div>
+<a href="pagedemo.html">
+	<img src="images/pagedemo.jpg" height="570px" width="800px">
+</a>
+</div>
+
+</div>
+</body>
+<script type="text/javascript">
+ $(function(){
+  
+   $("a").click(function(event){
+       return false;
+ 	})
+    var works = $(".small").find("a");
+  
+    for(var i=0;i<works.length;i++){
+     $(works[i]).click(function(){
+
+     	$(".big").empty();
+       var href = this.getAttribute("href");
+       var img = $(this).children().first();
+       var  src =img.attr("src");
+       var text = img.attr("alt");
+       var biga=document.createElement("a");
+       $(biga).attr("href",href);
+        var bigimg=document.createElement("img");
+        $(bigimg).attr("src",src);
+        $(bigimg).css({"height":"570px","width":"800px"});
+       $(biga).append(bigimg);
+       var div=document.createElement("div");
+       $(div).addClass("decrp");
+        $(div).html(text);
+        $($(".big")).prepend(div);
+       $($(".big").append(biga));
+        
+     });
+ }
+ var Fristop = $(".one").offset().top;
+ console.log(Fristop);
+   $(".tango").click(function(){
+       var lists = $(".small").find("div");
+       for(var i=0;i<lists.length;i++){
+          var t  = parseInt($(lists[i]).css("top"));
+           t = t-180 ;
+          $(lists[i]).animate({
+            top:t+"px"
+          },2000);
+       }
+   })
+    $(".tange").click(function(){
+       var lists = $(".small").find("div");
+       for(var i=0;i<lists.length;i++){
+          var t  = parseInt($(lists[i]).css("top"));
+           t = t+180 ;
+          $(lists[i]).animate({
+            top:t+"px"
+          },2000);
+       }
+   })
+    
+})
+</script>
+</HTML>
