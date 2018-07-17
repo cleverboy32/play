@@ -1,0 +1,333 @@
+<!DOCTYPE HTML>
+
+<HEAD>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <TITLE>人机大战五子棋</TITLE>
+ <style>
+    body {
+        text-align: center;
+    }
+    .mask {
+        position: fixed;
+        height: 100%;
+        width: 100%;
+        z-index: 1000;
+        top: 0px;
+    }
+    canvas {
+        margin: 0 auto;
+    }
+    .left {
+        float: left;
+        margin-left: 10%;
+        margin-top: 20%;
+    }
+    .right {
+        float: right;
+        margin-right: 10%;
+        margin-top: 20%;
+    }
+
+    .paly {
+        color: #fff;
+        border: 1px solid rgba(29, 191, 110, .8);
+        background: rgba(29, 191, 110, .8);
+        line-height: 30px;
+        border-radius: 4px;
+    }
+
+ </style>
+</HEAD>
+
+<body>
+    <div class="left">
+        <div class="one"></div>
+        <p class="paly1 paly">playing</p>
+    </div>
+    <canvas id="canvas" style="border:1px solid #aaa;"></canvas>
+    <div class="right">
+        <div class="two"></div>
+        <p class="paly2 paly" style="display: none">playing</p>
+    </div>
+    <div class="mask"></div>
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    var socket = io();
+    let mask = document.querySelector('.mask');
+    let play1 = document.querySelector('.paly1');
+    let play2 = document.querySelector('.paly2');
+
+    let falg;
+    
+    socket.on('chesspress', (position) => {
+        fangqi(position.x, position.y);
+    });
+
+    socket.on('roomuser', (id, clients) => {
+        if (clients.length) {
+            console.log(clients);
+            if (id === socket.id) {
+                document.querySelector('.two').innerHTML = '白棋 <span class="black-self"> * 您</span>';
+                document.querySelector('.one').innerHTML = `黑棋 <span class="black-self">${clients[0]}</span>`;
+            } else {
+                document.querySelector('.two').innerHTML = `白棋 <span class="black-self"> ${clients[0]}</span>`;
+                document.querySelector('.one').innerHTML = `黑棋 <span class="black-self"> * 您</span>`;
+            }
+        } else {
+            if (id === socket.id) {
+                document.querySelector('.one').innerHTML = '黑棋 <span class="black-self"> * 您</span>';
+                document.querySelector('.two').innerHTML = `白棋 <span class="black-self">${clients[0]}</span>`;
+            }
+        }
+
+        if (id === socket.id) {
+            falg = 1;
+        } else {
+            falg = 0;
+            mask.style.display = 'none';
+        }
+    });
+
+
+    var width = 520;
+    var height = 520;
+    var whiteFlag = {num: 0};
+    var k = 0;
+
+    //创建所有表格数组
+    var locations = [];
+
+    // 判断位置是否有棋
+    function ischess(x, y) {
+        for (var i = 0; i < locations.length; i++) {
+            if (locations[i].x == x && locations[i].y == y) {
+                if (locations[i].index == 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    //放棋函数
+    function fangqi(rx, ry) {
+        var context = canvas.getContext('2d');
+        context.beginPath();
+        if (k == 0) {
+            context.fillStyle = "#000";
+        } else {
+            context.fillStyle = "#ccc";
+        }
+
+        for (var i = 0; i < locations.length; i++) {
+            if (locations[i].x == (rx) && locations[i].y == (ry)) {
+                if (locations[i].index == 0) {
+                    context.beginPath();
+                    context.arc(rx, ry, 15, 0, 360, false);
+                    context.fill();
+                    context.closePath();
+                    if (k == 0) {
+                        locations[i].index = 1;
+                    }
+                    if (k == 1) {
+                        locations[i].index = 2;
+                    }
+                    // 放了之后判断是否赢
+                    var win = judgeWin(rx, ry, k + 1);
+                    
+                    if (typeof win == 'boolean' && win) {
+                        if (k == 0) {
+                            alert('恭喜黑旗赢了');
+                        }
+                        if (k == 1) {
+                            alert('恭喜白旗赢了');
+                        }
+                    } else {
+                        if (k == 1) {
+                            k = 0;
+                            play1.style.display = 'block';
+                            play2.style.display = 'none';
+                        } else {
+                            k = 1;
+                            play1.style.display = 'none';
+                            play2.style.display = 'block';
+                        }
+
+                        if (falg === k) {
+                            mask.style.display = 'none';
+                        } else {
+                            mask.style.display = 'block';
+                        }
+                    }
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+    }
+
+    //机器算法 默认机器是白棋
+    function computerdo(win) {
+        var context = canvas.getContext('2d');
+        context.fillStyle = "#ccc";
+        let begin = win.begin;
+        let end = win.end;
+        let upLoc = ischess(begin.rx, begin.ry);
+        if(whiteFlag && win.num>=whiteFlag.num){
+            if (upLoc) {
+                fangqi(begin.rx, begin.ry, context);
+            } else {
+                upLoc = ischess(end.rx, end.ry);
+                if (upLoc) {
+                    fangqi(end.rx, end.ry, context);
+                } else {
+                    //前后都被放了棋且不是黑棋          
+                }
+            }
+        } else {
+
+        }
+    }
+
+    //各方向上的棋子数
+    function derectionChess(postionx, postiony, chessNum, chess, derection) {
+        chessNum++;
+
+        if (derection === 'up') {
+            postiony = postiony - 40;
+        } 
+
+        if (derection === 'down') {
+            postiony = postiony + 40;
+        }
+
+        if (derection === 'left') {
+            postionx = postionx - 40;
+        }
+
+        if (derection === 'right') {
+            postionx = postionx + 40;
+        }
+
+        if (derection === 'leup') {
+            postionx = postionx - 40;
+            postiony = postiony - 40;
+        }
+
+        if (derection === 'ridown') {
+            postionx = postionx + 40;
+            postiony = postiony + 40;
+        }
+
+        if (derection === 'ledown') {
+            postionx = postionx - 40;
+            postiony = postiony + 40;
+        }
+
+        if (derection === 'riup') {
+            postionx = postionx + 40;
+            postiony = postiony - 40;
+        }
+
+        for (var i = 0; i < locations.length; i++) {
+            if (locations[i].x == postionx && locations[i].y == postiony) {
+                if (locations[i].index == chess) {
+                    return derectionChess(postionx, postiony, chessNum, chess, derection);
+                }
+                else {
+                    return { falg: chessNum, rx: postionx, ry: postiony };
+                }
+            }
+        }
+        return {falg: chessNum, rx: 0, ry: 0};
+
+    }
+
+    //棋的输赢判断 
+    function judgeWin(rx, ry, chess) {
+        var linenum = 0;
+        var win = false;
+        //向上向下验证
+        var upflags = derectionChess(rx, ry, 0, chess, 'up');
+        var deflags = derectionChess(rx, ry, 0, chess, 'down');
+        var upde = upflags.falg + deflags.falg;
+
+        //向左向右验证
+        var leflags = derectionChess(rx, ry, 0, chess, 'left');
+        var riflags = derectionChess(rx, ry, 0, chess, 'right');
+        var leri = leflags.falg + riflags.falg;
+
+        //左上角右下角验证
+        var leupflags = derectionChess(rx, ry, 0, chess, 'leup');
+        var rideflags = derectionChess(rx, ry, 0, chess, 'ridown');
+        var uple = leupflags.falg + rideflags.falg;
+
+        //左下角右上角验证
+        var ledeflags = derectionChess(rx, ry, 0, chess, 'ledown');
+        var riupflags = derectionChess(rx, ry, 0, chess, 'riup');
+        var upri = ledeflags.falg + riupflags.falg;
+
+        var linenum = Math.max(upde, leri, uple, upri);
+        if (linenum > 5) {
+            return true;
+        } else {
+            if (linenum == upde) {// 方向 0： 树直， 1：水平 2：左斜线  3：右斜线
+                if(k==1) whiteFlag = { num: linenum, begin: upflags, end: deflags, derection: 0 };
+                return { num: linenum, begin: upflags, end: deflags, derection: 0 };
+            }
+
+            if (linenum == leri) {
+                if(k==1) whiteFlag = { num: linenum, begin: upflags, end: deflags, derection: 0 };
+                return { num: linenum, begin: leflags, end: riflags, derection: 1 };
+            }
+
+            if (linenum == uple) {
+                if(k==1) whiteFlag = { num: linenum, begin: upflags, end: deflags, derection: 0 };
+                return { num: linenum, begin: leupflags, end: rideflags, derection: 2 };
+            }
+
+            if (linenum == upri) {
+                if(k==1) whiteFlag = { num: linenum, begin: upflags, end: deflags, derection: 0 };
+                return { num: linenum, begin: ledeflags, end: riupflags, derection: 3 };
+            }
+        }
+    }
+
+    window.onload = function () {
+        var canvas = document.getElementById("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        var context = canvas.getContext('2d');
+        context.fillStyle = "#ccc";
+        context.fillRect(0, 0, width, height);
+        context.fillStyle = "#fff";
+        context.strokeStyle = "#ccc";
+        context.fillRect(20, 20, width - 40, height - 40);
+        context.strokeRect(20, 20, width - 40, height - 40);
+        
+        for (var i = 0; i < (width - 40) / 40; i++) {
+            for (j = 0; j < (height - 40) / 40; j++) {
+                context.strokeRect(20 + j * 40, 20 + i * 40, 40, 40);
+                var location = {
+                    x: 40 + j * 40,
+                    y: 40 + i * 40,
+                    index: 0 //没被放棋
+                };
+                locations.push(location);
+            }
+        }
+        
+        canvas.onmousedown = function (event) {
+            event = event || window.event;
+            var posX = event.offsetX;
+            var posY = event.offsetY;
+            var rx = Math.floor((posX - 20) / 40) * 40 + 40;
+            var ry = Math.floor((posY - 20) / 40) * 40 + 40;
+            socket.emit('press', {x: rx, y: ry});
+        }
+    }
+</script>
+
+</html>
